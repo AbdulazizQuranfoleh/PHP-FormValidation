@@ -22,10 +22,11 @@ $title=$fname=$password='';
         $error['password']="you must but your password";
 }
 }
+    include("connectlogin.php");
         ?>
 
 <h2>SignUp</h2>
-<form action="" method="POST">
+<form action="connectlogin.php" method="POST">
 <input  id="fname" type="text" placeholder="first Name" name="fname" value="<?php echo $fname ?>" ><div><?php echo $error['fname']; ?></div>
 <input id="password" type="text" name="password" placeholder="password" value="<?php echo $password ?>"><div><?php echo $error['password']; ?></div>
 <button type="submit" name="submit">Signin</button>

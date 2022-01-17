@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-<button><a href="form.php"> SIGN UP</button>
-    <button><a href="signin.php">SIGN in</button>
+<button><a href="SignUp.php"> SIGN UP</button>
+    <button><a href="Login.php">login</button>
 </body>
 </html>
