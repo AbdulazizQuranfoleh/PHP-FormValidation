@@ -1,65 +1,88 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
 <?php
-$title=$fname=$password='';
-$error=array('fname'=>'','password'=>'');
-// database
+session_start();
 
 
-// if(isset($_POST['submit'])){
-    
-//     if(empty($_POST['fname'])){
-       
-        
-//          $error['fname']="you must but your  name";
-//      }else
-//      { $fname=$_POST['fname'];}
-
-//      if(empty($_POST['password'])){
-//         $error['password']="you must but your password";
-//     }
-$servername = "localhost";
-$username = "root";
-$passwordd = "";
-$dbname = "form_db";
 
 try {
-  $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $passwordd);
+  $sereverName = "localhost";
+  $dbName = "form_db";
+  $dbusername = "root";
+  $dbpassword = "";
+  $conn = new PDO("mysql:host=$sereverName;dbname=$dbName", $dbusername, $dbpassword);
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "INSERT INTO users (fname, password)
-  VALUES ('$fname    ', ' $password')";
-  // use exec() because no results are returned
-  $conn->exec($sql);
-  $last_id = $conn->lastInsertId();
-  echo "New record created successfully. Last inserted ID is: " . $last_id;
-} catch(PDOException $e) {
-  echo $sql . "<br>" . $e->getMessage();
+} catch (PDOException $e) {
+  echo "<br>" . $e->getMessage();
 }
+?>
 
-$conn = null;
+<html>  
+<head>  
+    <title>login </title>  
+   
+</head>  
+<body>  
+    <div id = "frm">  
+        <h1>Login</h1>  
+        <form name="f1" action = "<?php $_SERVER['PHP_SELF']?>" onsubmit = "return validation()" method = "POST">  
+            <p>  
+                <label> UserName: </label>  
+                <input type = "text" id ="user" name  = "user" />  
+            </p>  
+            <p>  
+                <label> Password: </label>  
+                <input type = "password" id ="pass" name  = "pass" />  
+            </p>  
+            <p>     
+                <input type =  "submit" id = "btn" value = "Login" />  
+            </p>  
+        </form>  
+      </div>  
+      <?php
     
+    
+if(isset($_POST['user']) && isset($_POST['pass'])){
+  $username = $_POST['user'];  
+  $password = $_POST['pass'];
+        $sql =" SELECT fname,password, admin FROM users WHERE fname='$username' AND password='$password'";  
+       
+        $data=$conn->query($sql);
+        $result = $data->fetch(PDO::FETCH_ASSOC);
 
-    // include("connectlogin.php");
-        ?>
-
-<h2>SignUp</h2>
-<form action="" method="POST">
-<input  id="fname" type="text" placeholder="first Name" name="fname" value="<?php echo $fname ?>" ><div><?php echo $error['fname']; ?></div>
-<input id="password" type="text" name="password" placeholder="password" value="<?php echo $password ?>"><div><?php echo $error['password']; ?></div>
-<button type="submit" name="submit">Signin</button>
-</form>
+        if($data->rowCount() ===1 && $result['admin']==1){  
+            echo "<h1><center>user  Login successful {$result['fname']}</center></h1>";  
 
 
+        }else if($data->rowCount() ===1 && $result['admin']!==1){  
+          echo "<h1><center>admin Login successful {$result['fname']}</center></h1>";  
 
-<button><a href="index.php">main</button>
-</body>
-</html>
+      }  
+        else {  
+            echo "<h1> Login failed. Invalid username or password.</h1>";  
+        } 
+      }
+      ?>
+
+    <script>  
+            function validation()  
+            {  
+                var id=document.f1.user.value;  
+                var ps=document.f1.pass.value;  
+                if(id.length=="" && ps.length=="") {  
+                    alert("User Name and Password fields are empty");  
+                    return false;  
+                }  
+                else  
+                {  
+                    if(id.length=="") {  
+                        alert("User Name is empty");  
+                        return false;  
+                    }   
+                    if (ps.length=="") {  
+                    alert("Password field is empty");  
+                    return false;  
+                    }  
+                }                             
+            }  
+        </script>  
+</body>     
+</html>  
