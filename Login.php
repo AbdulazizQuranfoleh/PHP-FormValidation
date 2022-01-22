@@ -53,7 +53,8 @@ if(isset($_POST['user']) && isset($_POST['pass'])){
 
 
         }else if($data->rowCount() ===1 && $result['admin']!==1){  
-          echo "<h1><center>admin Login successful {$result['fname']}</center></h1>";  
+          echo "<h1><center>admin Login successful {$result['fname']}</center></h1>"; 
+          echo "<button><a href='admin/index.php'><h1><center>go admin </center></h1></button>" ;
 
       }  
         else {  
