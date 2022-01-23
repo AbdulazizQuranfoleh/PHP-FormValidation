@@ -1,7 +1,7 @@
 <?php
-session_start();
+// session_start();
 
-
+$currentDate = date('Y-m-d g:i:s');
 
 try {
   $sereverName = "localhost";
@@ -44,17 +44,19 @@ if(isset($_POST['user']) && isset($_POST['pass'])){
   $username = $_POST['user'];  
   $password = $_POST['pass'];
         $sql =" SELECT fname,password, admin FROM users WHERE fname='$username' AND password='$password'";  
-       
         $data=$conn->query($sql);
         $result = $data->fetch(PDO::FETCH_ASSOC);
-
+        $last_activity=date('y-m-d');
         if($data->rowCount() ===1 && $result['admin']==1){  
             echo "<h1><center>user  Login successful {$result['fname']}</center></h1>";  
-
-
+            $data = "UPDATE users SET last_activity='$last_activity' WHERE fname='$username' AND password='$password'";
+            $conn->exec($data);  
+            
         }else if($data->rowCount() ===1 && $result['admin']!==1){  
-          echo "<h1><center>admin Login successful {$result['fname']}</center></h1>"; 
-          echo "<button><a href='admin/index.php'><h1><center>go admin </center></h1></button>" ;
+            $data = "UPDATE users SET last_activity='$last_activity'WHERE fname='$username' AND password='$password'";
+            $conn->exec($data);
+            echo "<h1><center>admin Login successful {$result['fname']}</center></h1>"; 
+            echo "<button><a href='admin/index.php'><h1><center>go admin </center></h1></button>" ;
 
       }  
         else {  
