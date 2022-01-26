@@ -16,9 +16,9 @@ try {
   $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $pass);
   // set the PDO error mode to exception
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = "INSERT INTO users (fname, lname, email,password,password2)
-  VALUES ('$fname',' $lname', '$email','$password','$password2')";
-  // use exec() because no results are returned
+  $date=date('y-m-d');
+  $sql = "INSERT INTO users (fname, lname, email,password,password2,date)
+  VALUES ('$fname',' $lname', '$email','$password','$password2','$date')";
   $conn->exec($sql);
   echo "New record created successfully";
 } catch(PDOException $e) {

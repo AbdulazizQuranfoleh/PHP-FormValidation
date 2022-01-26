@@ -10,17 +10,17 @@
 <body>
 <?php
 $title=$fname=$lname=$email=$password=$password2='';
-  $error=array('fname'=>'', 'lname'=>'','email'=>'','password'=>'','password2'=>'');
-  if(isset($_POST['submit'])){
-  
-     if(empty($_POST['fname'])){
+$error=array('fname'=>'', 'lname'=>'','email'=>'','password'=>'','password2'=>'');
+if(isset($_POST['submit'])){
+    
+    if(empty($_POST['fname'])){
         
-         $error['fname']="you must but your first name";
-     }else
-     { $fname=$_POST['fname'];}
-
-
-     if(empty($_POST['lname'])){
+        $error['fname']="you must but your first name";
+    }else
+    { $fname=$_POST['fname'];}
+    
+    
+    if(empty($_POST['lname'])){
         $error['lname']="you must but your last name";
     }else
     {$lname=$_POST['lname'];}
@@ -47,9 +47,9 @@ $title=$fname=$lname=$email=$password=$password2='';
         $error['password2']="you must but your password";
     }else
     { $password2=$_POST['password2'];}
-    }
-    if(!empty($_POST['password2'])&& !empty($_POST['password']) &&!empty($_POST['email']) && !empty($_POST['lname']) &&!empty($_POST['fname']) )
-    include("connect.php");
+}
+if(!empty($_POST['password2'])&& !empty($_POST['password']) &&!empty($_POST['email']) && !empty($_POST['lname']) &&!empty($_POST['fname']) )
+include("connect.php");
     ?>
 <h2>SignUp</h2>
 <form  action=""  method="POST">
@@ -63,7 +63,6 @@ $title=$fname=$lname=$email=$password=$password2='';
 <small id="passwordm"></small>
 <input  id="password2" onkeyup="submitData()" required type="password" name="password2" placeholder="same password" value="<?php echo $password2 ?>"><div><?php echo $error['password2']; ?></div>
 <small id="password2m"></small>
-
 <button type="submit" name="submit">SignUp</button>
 </form>    
 
